@@ -1,0 +1,9 @@
+{
+    "actions": [
+        { "actionType": "Skating", "duration": 3.0 },
+        { "actionType": "Passing", "duration": 1.5 },
+        { "actionType": "Defending", "duration": 2.0 },
+        { "actionType": "Shooting", "duration": 1.0 },
+        { "actionType": "Skating", "duration": 2.5 }
+    ]
+}

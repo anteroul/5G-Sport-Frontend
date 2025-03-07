@@ -29,6 +29,9 @@
 # Visual Studio cache directory
 .vs/
 
+# VS Code generated BS
+.vscode/
+
 # Gradle cache directory
 .gradle/
 
@@ -73,5 +76,8 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# We don't need to include this.
+/[Aa]ssets/TutorialInfo/*
 
 # End of https://www.toptal.com/developers/gitignore/api/unity

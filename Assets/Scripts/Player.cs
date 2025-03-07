@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        // TODO: Collisions with walls.
         if (!enableControls)
         {
             Vector2 movement = waypoint * movementSpeed * Time.deltaTime;

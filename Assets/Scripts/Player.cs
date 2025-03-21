@@ -25,7 +25,6 @@ public class Player : MonoBehaviour
     private SpriteRenderer ren;
     private Vector2 playerPosition;
     private Vector2 waypoint;
-    private Collider2D skateArea;
     private int playerID = 0;
 
     void Awake()
@@ -33,7 +32,6 @@ public class Player : MonoBehaviour
         FetchData();
         transform.Translate(playerPosition);
         Debug.Log("Player ID:" + playerID + " spawned in " + playerPosition);
-        skateArea = rink.GetComponent<PolygonCollider2D>();
     }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created

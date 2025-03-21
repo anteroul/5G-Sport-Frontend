@@ -621,7 +621,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rink
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9035856974429762869, guid: 4d6100751d443fa41934e2c3cd5a4e8e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

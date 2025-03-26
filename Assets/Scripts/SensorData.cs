@@ -22,6 +22,6 @@ public class SensorData
     }
     public override string ToString()
     {
-        return $"Time: {Timestamp}s, Acc:({AccX}, {AccY}, {AccZ}), Gyro:({GyroX}, {GyroY}, {GyroZ}), Magn:({MagnX}, {MagnY}, {MagnZ})";
+        return $"Acc: ({AccX}, {AccY}, {AccZ}) | Gyro: ({GyroX}, {GyroY}, {GyroZ}) | Magn: ({MagnX}, {MagnY}, {MagnZ})";
     }
 }

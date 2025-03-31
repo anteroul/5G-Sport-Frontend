@@ -10,7 +10,7 @@ public class StatsPanel : MonoBehaviour
     public void UpdateStatsPanel(int playerID, string playerName)
     {
         playerIDText.text = "ID: " + playerID;
-        playerNameText.text = "Name: " + playerName;
+        playerNameText.text = playerName;
         teamText.text = playerID <= 11 ? "RED" : "BLUE";
     }
 }

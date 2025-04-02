@@ -266,7 +266,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39253716}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0596b91e656b9e94c9e26c40df08fb6d, type: 3}
   m_Name: 
@@ -2511,6 +2511,8 @@ GameObject:
   m_Component:
   - component: {fileID: 410856956}
   - component: {fileID: 410856958}
+  - component: {fileID: 410856961}
+  - component: {fileID: 410856960}
   - component: {fileID: 410856957}
   - component: {fileID: 410856959}
   m_Layer: 5
@@ -2586,7 +2588,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410856955}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da0358549a9756b4b8b9fcc02dcb4d7b, type: 3}
   m_Name: 
@@ -2594,6 +2596,43 @@ MonoBehaviour:
   playerIDText: {fileID: 537562504}
   playerNameText: {fileID: 504018143}
   teamText: {fileID: 683591325}
+--- !u!114 &410856960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410856955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65b601885aa8274592b7d6bc7300b5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerIDText: {fileID: 537562504}
+  playerNameText: {fileID: 504018143}
+  teamText: {fileID: 683591325}
+  heartRateController: {fileID: 725786242}
+  speedText: {fileID: 639952928}
+  enduranceLevelText: {fileID: 1438747037}
+--- !u!114 &410856961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410856955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db3fb1cbcf4274b4bbe423166d1c9fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statsPanel: {fileID: 410856960}
+  testPlayerID: 1
+  testPlayerName: Test Player
+  testTeam: Red
+  testBPM: 80
+  testSpeed: 10
+  testEnduranceLevel: 5
 --- !u!1 &422509679
 GameObject:
   m_ObjectHideFlags: 0
@@ -3397,8 +3436,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -49, y: -95.27002}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -70.2419, y: -90.903}
+  m_SizeDelta: {x: 123.5162, y: 41.265}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &537562504
 MonoBehaviour:
@@ -4002,8 +4041,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 63, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 2, y: -11.5}
+  m_SizeDelta: {x: 102.034, y: 73}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &639952928
 MonoBehaviour:
@@ -4052,15 +4091,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 65.3
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -4412,8 +4451,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -164, y: -95.27002}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -212.11, y: -95}
+  m_SizeDelta: {x: 126.22, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &683591325
 MonoBehaviour:
@@ -4462,10 +4501,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 37.45
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -4500,7 +4539,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -3.0593262, y: 0, z: 10.197754, w: 8.158325}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4948,95 +4987,117 @@ MonoBehaviour:
   - cardObject: {fileID: 54476475}
     playerIDText: {fileID: 1211616065}
     playerNameText: {fileID: 176330990}
+    team: VERDE
     selectButton: {fileID: 1031722943}
   - cardObject: {fileID: 269806589}
     playerIDText: {fileID: 506577874}
     playerNameText: {fileID: 2111964445}
+    team: 
     selectButton: {fileID: 1827428589}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   team2Cards:
   - cardObject: {fileID: 2093187772}
     playerIDText: {fileID: 1115461942}
     playerNameText: {fileID: 143464640}
+    team: 
     selectButton: {fileID: 1964352966}
   - cardObject: {fileID: 248187760}
     playerIDText: {fileID: 1643362272}
     playerNameText: {fileID: 228639649}
+    team: 
     selectButton: {fileID: 1245839569}
   - cardObject: {fileID: 1931596493}
     playerIDText: {fileID: 1931596492}
     playerNameText: {fileID: 1931596491}
+    team: 
     selectButton: {fileID: 1931596490}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   - cardObject: {fileID: 0}
     playerIDText: {fileID: 0}
     playerNameText: {fileID: 0}
+    team: 
     selectButton: {fileID: 0}
   team1Button: {fileID: 891507037}
   team2Button: {fileID: 1603141290}
-  statsPanel: {fileID: 410856959}
+  statsPanel: {fileID: 410856960}
 --- !u!1 &856077860
 GameObject:
   m_ObjectHideFlags: 0
@@ -7741,8 +7802,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 17, y: -20}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -45, y: -22.6462}
+  m_SizeDelta: {x: 83, y: 59.5516}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1438747037
 MonoBehaviour:
@@ -7791,15 +7852,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
+  m_fontSize: 30
   m_fontSizeBase: 26
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

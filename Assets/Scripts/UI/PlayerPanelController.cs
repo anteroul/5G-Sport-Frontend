@@ -18,7 +18,7 @@ public class PlayerPanelController : MonoBehaviour
     public Button team1Button;
     public Button team2Button;
 
-    public StatsPanel statsPanel; // Reference to the Stats Panel
+    public StatsPanelController statsPanel; // Reference to the Stats Panel
     private int selectedPlayerID = -1;
 
     void Start()
@@ -56,10 +56,10 @@ public class PlayerPanelController : MonoBehaviour
         }
     }
 
-    public void SetSelectedPlayer(int playerID, string playerName)
+    public void SetSelectedPlayer(int playerID, string playerName, string team)
     {
         selectedPlayerID = playerID;
-        statsPanel.UpdateStatsPanel(playerID, playerName);
+        statsPanel.UpdatePlayerInfo(playerID, playerName, team);
     }
 
     // Nested class for Player Cards (Manually Assigned)
@@ -69,6 +69,7 @@ public class PlayerPanelController : MonoBehaviour
         public GameObject cardObject; // The actual card GameObject
         public TMP_Text playerIDText;
         public TMP_Text playerNameText;
+        public string team;
         public Button selectButton;
 
         private PlayerPanelController panelController;
@@ -96,7 +97,7 @@ public class PlayerPanelController : MonoBehaviour
         {
             if (playerID != -1)
             {
-                panelController.SetSelectedPlayer(playerID, playerNameText.text);
+                panelController.SetSelectedPlayer(playerID, playerNameText.text, team);
             }
             else
             {

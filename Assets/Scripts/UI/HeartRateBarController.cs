@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class HeartRateBarController : MonoBehaviour
 {
     public Image heartRateBarImage; // UI Image for the heart rate bar
     public Sprite[] heartRateSprites; // Sprites for different fullness levels
-    public float baseBeatSpeed = 1.0f; // Default speed of beats
+    public TMP_Text bpmText; // UI Text for BPM
+    public TMP_Text statusText; // UI Text for Heart Rate status
 
     private float currentBPM = 60f; // Default BPM
     private bool isBeating = false;
@@ -17,10 +19,52 @@ public class HeartRateBarController : MonoBehaviour
         StartCoroutine(HeartbeatEffect());
     }
 
-    public void SetHeartRate(float value, float bpm)
+    public void SetHeartRate(float bpm)
     {
         currentBPM = Mathf.Clamp(bpm, 40f, 200f); // Keep BPM within a reasonable range
-        targetFillIndex = Mathf.Clamp(Mathf.RoundToInt(value * (heartRateSprites.Length - 1)), 0, heartRateSprites.Length - 1);
+        targetFillIndex = GetFillIndex(currentBPM); // Get sprite level
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        // Update BPM Text
+        if (bpmText != null)
+        {
+            bpmText.text = currentBPM.ToString("F0");
+        }
+
+        // Update Status Text
+        if (statusText != null)
+        {
+            statusText.text = GetHeartRateStatus(currentBPM);
+        }
+
+        // Update Sprite
+        if (heartRateBarImage != null)
+        {
+            heartRateBarImage.sprite = heartRateSprites[targetFillIndex];
+        }
+    }
+
+    private string GetHeartRateStatus(float bpm)
+    {
+        if (bpm < 60) return "Resting";
+        else if (bpm < 80) return "Very Light";
+        else if (bpm < 100) return "Light";
+        else if (bpm < 120) return "Vigorous";
+        else if (bpm < 140) return "High";
+        else return "Very High";
+    }
+
+    private int GetFillIndex(float bpm)
+    {
+        if (bpm < 60) return 0;
+        else if (bpm < 80) return 1;
+        else if (bpm < 100) return 2;
+        else if (bpm < 120) return 3;
+        else if (bpm < 140) return 4;
+        else return 5;
     }
 
     private IEnumerator HeartbeatEffect()

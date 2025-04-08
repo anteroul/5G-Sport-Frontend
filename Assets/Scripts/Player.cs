@@ -1,90 +1,44 @@
+using System;
 using UnityEngine;
-using System.IO;
 
+[Serializable]
 public class Player : MonoBehaviour
 {
-    enum Colour {
-        UNDEFINED = 0,
-        BLUE,
-        RED,
-    };
+    public int ID;
+    public string Name;
+    public readonly float Weight;
+    public Team PlayerTeam;
+    public int HR;
+    public float ECG;
+    public int CaloriesBurnt;
+    public float DirectionInAngles;
 
-    [SerializeField]
-    public bool enableControls;
-    public string fileName = "test.json";
+    private float force;
+    private float acceleration;
+
     
-    [Tooltip("Drag the ice rink game object inside the rink prefab here.")]
-    public GameObject rink;
-    public GameObject jerseyPicker;
-    public float movementSpeed = 3.5f;
-    
-    [Tooltip("Untoggle = Blue | Toggle = Red")]
-    public bool team;
-
-    private Colour col = Colour.UNDEFINED;
-    private SpriteRenderer ren;
-    private Vector2 playerPosition;
-    private Vector2 waypoint;
-    private Collider2D skateArea;
-    private int playerID = 0;
-
-    void Awake()
+    Player(int iD, string name, Team team)
     {
-        FetchData();
-        transform.Translate(playerPosition);
-        Debug.Log("Player ID:" + playerID + " spawned in " + playerPosition);
-        skateArea = rink.GetComponent<PolygonCollider2D>();
-    }
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        ren = jerseyPicker.GetComponent<SpriteRenderer>();
-        col = team ? Colour.RED : Colour.BLUE;
+        System.Random rand = new System.Random();
         
-        if ((int)col == 0)
-        {
-            return;
-        }
-
-        ren.enabled = false;
-        SetTeamJersey(team ? "Red" : "Blue");
+        ID = iD;
+        Name = name;
+        Weight = (float)(rand.NextDouble() * (105 - 80) + 80);
+        PlayerTeam = team;
+        HR = 75;
+        ECG = 0.0f;
+        CaloriesBurnt = 0;
+        DirectionInAngles = 45.0f;
+        acceleration = 0.0f;
+        force = Weight * acceleration;
     }
 
-    void SetTeamJersey(string colour)
+    public void UpdatePlayer(int _hr, float _ecg, float _acc)
     {
-        ren = jerseyPicker.transform.Find(colour).GetComponent<SpriteRenderer>();
-        ren.enabled = true;
-    }
-
-    void Update()
-    {
-        // TODO: Collisions with walls.
-        if (!enableControls)
-        {
-            Vector2 movement = waypoint * movementSpeed * Time.deltaTime;
-            transform.Translate(movement);
-        } else {
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
-            Vector2 movement = new Vector2(horizontalInput, verticalInput) * movementSpeed * Time.deltaTime;
-            transform.Translate(movement);
-        }
-    }
-
-    void FetchData()
-    {
-        TextAsset jsonFile = Resources.Load<TextAsset>(fileName.Replace(".json", ""));
-
-        if (jsonFile == null)
-        {
-            Debug.LogError("JSON file not found: " + fileName);
-            return;
-        }
-
-        PlayerAction data = JsonUtility.FromJson<PlayerAction>(jsonFile.text);
-        playerID = data.id;
-        // Apply position to GameObject
-        waypoint = new Vector2(data.x, data.y);
+        HR = _hr;
+        ECG = _ecg;
+        acceleration = _acc;
+        force = acceleration * Weight;
+        Debug.Log(force);
     }
 }

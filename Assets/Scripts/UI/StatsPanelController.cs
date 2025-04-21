@@ -17,7 +17,7 @@ public class StatsPanelController : MonoBehaviour
 
     [Header("Endurance Section")]
     public TMP_Text enduranceLevelText;
-    //public EnduranceBarController enduranceBarController; // Manages visual representation
+    public EnduranceBarController enduranceBarController; // Manages visual representation
 
     public void UpdatePlayerInfo(int playerID, string playerName, string team)
     {
@@ -45,9 +45,15 @@ public class StatsPanelController : MonoBehaviour
     public void UpdateEndurance(int level)
     {
         string[] levels = { "BurnOut", "Exhaustion", "Severe Fatigue", "Low", "Mild Fatigue", "Slight Fatigue", "High", "Optimal" };
-       if (enduranceLevelText != null)
+
+        if (enduranceLevelText != null)
         {
             enduranceLevelText.text = levels[Mathf.Clamp(level, 0, levels.Length - 1)];
+        }
+
+        if (enduranceBarController != null)
+        {
+            enduranceBarController.SetEnduranceLevel(level);
         }
     }
 }

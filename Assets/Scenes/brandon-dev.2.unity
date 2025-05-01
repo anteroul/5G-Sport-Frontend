@@ -3331,7 +3331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.041972227, g: 0.16981131, b: 0.057806358, a: 1}
+  m_Color: {r: 0.043137256, g: 0.1249244, b: 0.16862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3386,10 +3386,13 @@ MonoBehaviour:
   playerIDText: {fileID: 537562504}
   playerNameText: {fileID: 504018143}
   teamText: {fileID: 683591325}
-  heartRateController: {fileID: 0}
+  heartRateController: {fileID: 2063292923}
+  energyText: {fileID: 266563648}
+  enduranceLevelText: {fileID: 1853930569}
+  enduranceBarController: {fileID: 2037750854}
   speedText: {fileID: 639952928}
-  enduranceLevelText: {fileID: 0}
-  enduranceBarController: {fileID: 0}
+  distanceText: {fileID: 1722533555}
+  distanceUIText: {fileID: 705019262}
 --- !u!114 &410856961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6231,7 +6234,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -12, y: 15.917786}
+  m_AnchoredPosition: {x: -12, y: 15.917725}
   m_SizeDelta: {x: 594.86, y: 938.7237}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &811202932
@@ -6247,7 +6250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.026564632, g: 0.10188681, b: 0.012111069, a: 1}
+  m_Color: {r: 0.011764702, g: 0.08492073, b: 0.101960786, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6637,8 +6640,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4284312925
-  m_fontColor: {r: 0.3660733, g: 0.4264151, b: 0.3660733, a: 1}
+    rgba: 4285361245
+  m_fontColor: {r: 0.3647059, g: 0.42503014, b: 0.42745098, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7467,7 +7470,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6.0606794, y: -28.894073}
+  m_AnchoredPosition: {x: 6.060669, y: -28.894073}
   m_SizeDelta: {x: 566.1619, y: 849.27}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &927843794
@@ -7513,7 +7516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.023671335, g: 0.10188681, b: 0.013648989, a: 0.392}
+  m_Color: {r: 0.011764702, g: 0.06529046, b: 0.101960786, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9005,7 +9008,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: STRESS
+  m_text: FATIGUE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 983e3e7bbd727b24083d7fe8ed161262, type: 2}
   m_sharedMaterial: {fileID: 6048151669741904431, guid: 983e3e7bbd727b24083d7fe8ed161262, type: 2}
@@ -9558,7 +9561,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.8123392, g: 0.90943396, b: 0.80819505, a: 0.58431375}
+    m_NormalColor: {r: 0.80784315, g: 0.9016742, b: 0.9098039, a: 0.58431375}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -10638,7 +10641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7615023, g: 0.84558034, b: 0.87169814, a: 0.23137255}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -14690,7 +14693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.071192585, g: 0.12452829, b: 0.071192585, a: 1}
+  m_Color: {r: 0.07058824, g: 0.10747852, b: 0.1254902, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

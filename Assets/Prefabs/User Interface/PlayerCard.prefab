@@ -264,8 +264,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Mark Robson
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 709e788b4b83dc747b85d6b8c999735a, type: 2}
+  m_sharedMaterial: {fileID: 3309256411109746080, guid: 709e788b4b83dc747b85d6b8c999735a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -481,8 +481,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 983e3e7bbd727b24083d7fe8ed161262, type: 2}
+  m_sharedMaterial: {fileID: 6048151669741904431, guid: 983e3e7bbd727b24083d7fe8ed161262, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

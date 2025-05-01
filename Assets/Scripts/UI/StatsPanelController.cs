@@ -9,15 +9,32 @@ public class StatsPanelController : MonoBehaviour
     public TMP_Text playerNameText;
     public TMP_Text teamText;
 
+
+    [Header("Health Statistics")]
+
+    [Header("ECG Section")]
+
     [Header("Heart Rate Section")]
     public HeartRateBarController heartRateController;
 
+    [Header("Energy Expenditure Section")]
+    public TMP_Text energyText;
+
+    [Header("Fatigue Section")]
+    public TMP_Text enduranceLevelText;
+    public EnduranceBarController enduranceBarController; // Manages visual representation
+
+    [Header ("Spatial Statistics")]
     [Header("Speed Section")]
     public TMP_Text speedText;
 
-    [Header("Endurance Section")]
-    public TMP_Text enduranceLevelText;
-    //public EnduranceBarController enduranceBarController; // Manages visual representation
+    [Header("Distance Section")]
+    public TMP_Text distanceText;
+    public TMP_Text distanceUIText;
+
+    //[Header("HeatMap Section")]
+
+
 
     public void UpdatePlayerInfo(int playerID, string playerName, string team)
     {
@@ -34,6 +51,11 @@ public class StatsPanelController : MonoBehaviour
         }
     }
 
+    public void UpdateEnergy(int kcal)
+    {
+        energyText.text = kcal.ToString();
+    }
+
     public void UpdateSpeed(float speedKMPH)
     {
         if (speedText != null)
@@ -42,12 +64,26 @@ public class StatsPanelController : MonoBehaviour
         }
     }
 
+    public void UpdateDistance(float distanceMeters)
+    {
+        if (speedText != null)
+        {
+            distanceText.text = distanceMeters.ToString("F1");
+        }
+    }
+
     public void UpdateEndurance(int level)
     {
         string[] levels = { "BurnOut", "Exhaustion", "Severe Fatigue", "Low", "Mild Fatigue", "Slight Fatigue", "High", "Optimal" };
-       if (enduranceLevelText != null)
+
+        if (enduranceLevelText != null)
         {
             enduranceLevelText.text = levels[Mathf.Clamp(level, 0, levels.Length - 1)];
+        }
+
+        if (enduranceBarController != null)
+        {
+            enduranceBarController.SetEnduranceLevel(level);
         }
     }
 }

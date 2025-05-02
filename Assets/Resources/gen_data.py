@@ -1,36 +1,56 @@
-import time
+import json
 import random
+import time
+from datetime import datetime, timezone
 
-csv_file = "sensor_data.csv"
+def generate_sensor_data(sensor_id):
+    timestamp_utc = int(time.time())
+    timestamp_ms = int((time.time() % 1) * 100000)
 
-def format_timestamp(timestamp):
-    minutes = int(timestamp // 60)
-    seconds = int(timestamp % 60)
-    milliseconds = int((timestamp * 1000) % 1000)  # Get milliseconds from the timestamp
-    return f"{minutes:02}:{seconds:02}:{milliseconds:03}"
+    return {
+        "sensorId": sensor_id,
+        "HR": {
+            "rrData": [random.randint(300, 500)],
+            "Movesense_series": "174630000192",
+            "Pico_ID": "pico_{}".format(sensor_id),
+            "Timestamp_UTC": timestamp_utc,
+            "average": round(random.uniform(95, 110), 1)
+        },
+        "ECG": {
+            "Samples": [random.randint(-65000, 65000) for _ in range(16)],
+            "Movesense_series": "174630000192",
+            "Pico_ID": "pico_{}".format(sensor_id),
+            "Timestamp_UTC": timestamp_utc,
+            "Timestamp_ms": timestamp_ms
+        },
+        "IMU9": {
+            "Timestamp_UTC": timestamp_utc,
+            "Movesense_series": "174630000192",
+            "Pico_ID": "pico_{}".format(sensor_id),
+            "Timestamp_ms": timestamp_ms + 50,
+            "ArrayAcc": [{"x": round(random.uniform(7, 9), 3), "y": round(random.uniform(-6, -4), 3), "z": round(random.uniform(1, 2), 3)} for _ in range(4)],
+            "ArrayGyro": [{"x": round(random.uniform(-2, 3), 2), "y": round(random.uniform(6, 10), 2), "z": round(random.uniform(5, 12), 2)} for _ in range(4)],
+            "ArrayMagn": [{"x": round(random.uniform(42, 45), 2), "y": round(random.uniform(-29, -24), 2), "z": round(random.uniform(3, 6), 2)} for _ in range(4)]
+        },
+        "GNSS": {
+            "GNSS_sensor_ID": "174630000192",
+            "Date": datetime.now(timezone.utc).isoformat(),
+            "Latitude": 60.223950 + random.uniform(0, 0.00001),
+            "Longitude": 24.945630 + random.uniform(0, 0.00001)
+        }
+    }
 
-while True:
-    with open(csv_file, "r") as file:
-        lines = file.readlines()
+def generate_player_data():
+    return {
+        "playerId": 12,
+        "sensorSetId": 1,
+        "sensors": [generate_sensor_data(i) for i in range(1, 4)]
+    }
 
-    new_lines = [lines[0]]  # Ignore header
-    for line in lines[1:]:
-        values = line.strip().split(",")
-        if len(values) >= 10:
-            values[0] = format_timestamp(time.time())           # Get timestamp from system time
-            values[1] = str(round(random.uniform(-5, 5), 3))    # Modify AccX
-            values[2] = str(round(random.uniform(-5, 5), 3))    # Modify AccY
-            values[3] = str(round(random.uniform(5, 15), 3))    # Modify AccZ
-            values[4] = str(round(random.uniform(-5, 5), 3))    # Modify GyroX
-            values[5] = str(round(random.uniform(-5, 5), 3))    # Modify GyroY
-            values[6] = str(round(random.uniform(-5, 5), 3))    # Modify GyroZ
-            values[7] = str(round(random.uniform(-5, 5), 3))    # Modify MagnX
-            values[8] = str(round(random.uniform(-5, 5), 3))    # Modify MagnY
-            values[9] = str(round(random.uniform(-5, 5), 3))    # Modify MagnZ
-        new_lines.append(",".join(values) + "\n")
+def save_json():
+    player_data = generate_player_data()
+    with open("Assets/Resources/sensor_data.json", "w") as f:
+        json.dump(player_data, f, indent=2)
 
-    with open(csv_file, "w") as file:
-        file.writelines(new_lines)
-
-    print("CSV updated")
-    time.sleep(0.1)  # Modify every 100ms
+if __name__ == "__main__":
+    save_json()

@@ -49,7 +49,7 @@ def generate_player_data():
 
 def save_json():
     player_data = generate_player_data()
-    with open("Assets/Resources/sensor_data.json", "w") as f:
+    with open("./sensor_data.json", "w") as f:
         json.dump(player_data, f, indent=2)
 
 if __name__ == "__main__":

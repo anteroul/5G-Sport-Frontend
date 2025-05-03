@@ -3391,6 +3391,7 @@ MonoBehaviour:
   enduranceLevelText: {fileID: 1853930569}
   enduranceBarController: {fileID: 2037750854}
   speedText: {fileID: 639952928}
+  speedBarController: {fileID: 2015367082}
   distanceText: {fileID: 1722533555}
   distanceUIText: {fileID: 705019262}
 --- !u!114 &410856961
@@ -13988,6 +13989,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2015367079}
+  - component: {fileID: 2015367082}
   - component: {fileID: 2015367081}
   - component: {fileID: 2015367080}
   m_Layer: 5
@@ -14057,6 +14059,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015367078}
   m_CullTransparentMesh: 1
+--- !u!114 &2015367082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015367078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e7b64f44e52aab439f900decb426dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedBarImage: {fileID: 2136556549}
+  speedSprites:
+  - {fileID: -1093741913, guid: d51af8e8e36c089419d303031924a69d, type: 3}
+  - {fileID: -718771725, guid: d51af8e8e36c089419d303031924a69d, type: 3}
+  - {fileID: 1400615513, guid: d51af8e8e36c089419d303031924a69d, type: 3}
+  - {fileID: -126367072, guid: d51af8e8e36c089419d303031924a69d, type: 3}
+  - {fileID: -775805316, guid: d51af8e8e36c089419d303031924a69d, type: 3}
+  speedLabelText: {fileID: 0}
 --- !u!1 &2033195622
 GameObject:
   m_ObjectHideFlags: 0

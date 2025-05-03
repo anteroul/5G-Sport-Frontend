@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 
@@ -27,6 +27,7 @@ public class StatsPanelController : MonoBehaviour
     [Header ("Spatial Statistics")]
     [Header("Speed Section")]
     public TMP_Text speedText;
+    public SpeedBarController speedBarController;
 
     [Header("Distance Section")]
     public TMP_Text distanceText;
@@ -56,6 +57,7 @@ public class StatsPanelController : MonoBehaviour
         energyText.text = kcal.ToString();
     }
 
+    /*
     public void UpdateSpeed(float speedKMPH)
     {
         if (speedText != null)
@@ -63,6 +65,18 @@ public class StatsPanelController : MonoBehaviour
             speedText.text = speedKMPH.ToString("F1");
         }
     }
+    */
+
+    public void UpdateSpeed(float speedKMPH)
+    {
+        // 1) Update the on‑screen text
+        if (speedText != null)
+            speedText.text = speedKMPH.ToString("F1");
+        speedBarController.SetSpeedLevel(speedKMPH);
+
+      
+    }
+
 
     public void UpdateDistance(float distanceMeters)
     {

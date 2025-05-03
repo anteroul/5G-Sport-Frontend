@@ -14757,6 +14757,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfea5fa5c2fe72c4cace306ce6b8ffb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statsPanel: {fileID: 828852813}
+  jsonFile: {fileID: 4900000, guid: d87d0ba8474bb70e89dd9493eaba5db2, type: 3}
 --- !u!4 &2073210646
 Transform:
   m_ObjectHideFlags: 0

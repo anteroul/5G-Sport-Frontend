@@ -3,19 +3,18 @@ using System.Collections.Generic;
 
 public class SensorDataReader : MonoBehaviour
 {
+    public StatsPanelController statsPanel;
     public readonly int PlayerCnt = 6;
-    public List<Player> Players;
+    public TextAsset jsonFile;
+    public List<Player> Players = new List<Player>();
     private Root root;
 
     void Awake()
     {
-        for (int i = 0; i < PlayerCnt / 2; i++)
+        for (int i = 0; i <= PlayerCnt; i++)
         {
-            Players.Add(new Player(i, "John Doe", false));
-        }
-        for (int i = PlayerCnt / 2; i < PlayerCnt; i++)
-        {
-            Players.Add(new Player(i, "John Doe", true));
+            if (PlayerCnt % 2 == 2) Players.Add(new Player(i, "John Doe", true));
+            else Players.Add(new Player(i, "John Doe", true));
         }
 
         ReadSensorData();
@@ -28,7 +27,6 @@ public class SensorDataReader : MonoBehaviour
 
     void ReadSensorData()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("sensor_data.json");
         if (jsonFile == null)
         {
             Debug.LogError("JSON file not found.");

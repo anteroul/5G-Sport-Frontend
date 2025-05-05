@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using TMPro; // Required for TextMeshPro
-
+using TMPro;
 
 public class PlayerPanelController : MonoBehaviour
 {
@@ -18,16 +17,14 @@ public class PlayerPanelController : MonoBehaviour
     public Button team1Button;
     public Button team2Button;
 
+    [Header("Detail Panel")]
     public StatsPanelController statsPanel; // Reference to the Stats Panel
-    private int selectedPlayerID = -1;
 
     void Start()
     {
-        ShowTeam1(); // Default to Team 1 view
-
+        ShowTeam1();
         team1Button.onClick.AddListener(ShowTeam1);
         team2Button.onClick.AddListener(ShowTeam2);
-
         InitializePlayerCards();
     }
 
@@ -46,63 +43,83 @@ public class PlayerPanelController : MonoBehaviour
     void InitializePlayerCards()
     {
         foreach (var card in team1Cards)
-        {
             card.Initialize(this);
-        }
-
         foreach (var card in team2Cards)
-        {
             card.Initialize(this);
-        }
     }
 
+    /// <summary>
+    /// Called by a PlayerCardUI when its Select button is clicked.
+    /// </summary>
     public void SetSelectedPlayer(int playerID, string playerName, string team)
     {
-        selectedPlayerID = playerID;
+        // 1) Turn off all fake-emitters
+        foreach (var c in team1Cards) c.SetEmitting(false);
+        foreach (var c in team2Cards) c.SetEmitting(false);
+
+        // 2) Find & enable only the chosen card
+        PlayerCardUI sel =
+            team1Cards.Find(c => c.PlayerID == playerID)
+          ?? team2Cards.Find(c => c.PlayerID == playerID);
+
+        if (sel != null)
+            sel.SetEmitting(true);
+
+        // 3) Update the detail panel afterwards
         statsPanel.UpdatePlayerInfo(playerID, playerName, team);
     }
 
-    // Nested class for Player Cards (Manually Assigned)
     [System.Serializable]
     public class PlayerCardUI
     {
-        public GameObject cardObject; // The actual card GameObject
+        public GameObject cardObject;   // The root of the card prefab
         public TMP_Text playerIDText;
         public TMP_Text playerNameText;
         public string team;
         public Button selectButton;
 
-        private PlayerPanelController panelController;
-        private int playerID;
+        PlayerPanelController panelController;
+        FakeDataController fakeCtrl;
+        public int PlayerID { get; private set; }
 
+        /// <summary>
+        /// Called once on Start(); caches FakeDataController and wires the button.
+        /// </summary>
         public void Initialize(PlayerPanelController controller)
         {
             panelController = controller;
 
-            // Read manually entered ID from Text
-            if (int.TryParse(playerIDText.text, out int parsedID))
-            {
-                playerID = parsedID;
-            }
-            else
-            {
-                playerID = -1; // Invalid ID case
-            }
+            // Parse the PlayerID from the text
+            if (!int.TryParse(playerIDText.text, out var id))
+                id = -1;
+            PlayerID = id;
 
-            // Assign button functionality
-            selectButton.onClick.AddListener(SelectPlayer);
+            // Cache reference to the FakeDataController on this card
+            fakeCtrl = cardObject.GetComponent<FakeDataController>();
+            if (fakeCtrl == null)
+                Debug.LogWarning($"No FakeDataController on cardObject for ID {PlayerID}");
+
+            // Wire up the Select button
+            selectButton.onClick.AddListener(OnSelectPressed);
         }
 
-        void SelectPlayer()
+        void OnSelectPressed()
         {
-            if (playerID != -1)
+            if (PlayerID < 0)
             {
-                panelController.SetSelectedPlayer(playerID, playerNameText.text, team);
+                Debug.LogWarning("Invalid PlayerID");
+                return;
             }
-            else
-            {
-                Debug.LogWarning("Invalid Player ID! Please enter a valid number.");
-            }
+            panelController.SetSelectedPlayer(PlayerID, playerNameText.text, team);
+        }
+
+        /// <summary>
+        /// Toggles the cached FakeDataController’s isEmitting flag.
+        /// </summary>
+        public void SetEmitting(bool emit)
+        {
+            if (fakeCtrl != null)
+                fakeCtrl.isEmitting = emit;
         }
     }
 }

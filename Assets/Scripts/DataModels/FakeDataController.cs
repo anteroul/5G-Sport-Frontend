@@ -109,7 +109,7 @@ public class FakeDataController : MonoBehaviour
 
         // Initialize smooth state
         currentHR = UnityEngine.Random.Range(90f, 110f);
-        currentSpeed = UnityEngine.Random.Range(5f, 10f);
+        currentSpeed = UnityEngine.Random.Range(0f, 8f);
         totalDistance = 0f;
         totalEnergy = 0f;
         StartCoroutine(EmitFakeData());

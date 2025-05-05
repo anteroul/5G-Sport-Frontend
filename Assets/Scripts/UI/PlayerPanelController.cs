@@ -20,12 +20,22 @@ public class PlayerPanelController : MonoBehaviour
     [Header("Detail Panel")]
     public StatsPanelController statsPanel; // Reference to the Stats Panel
 
+    [Header("ECG Wave Object")]
+    public GameObject ecgWave;
+
     void Start()
     {
+        ecgWave.SetActive(false);
         ShowTeam1();
         team1Button.onClick.AddListener(ShowTeam1);
         team2Button.onClick.AddListener(ShowTeam2);
         InitializePlayerCards();
+    }
+
+    // Expose this instance method
+    public void ShowECGWave(bool show)
+    {
+        ecgWave.SetActive(show);  // Valid: this.ecgWave exists here :contentReference[oaicite:2]{index=2}
     }
 
     void ShowTeam1()
@@ -111,6 +121,8 @@ public class PlayerPanelController : MonoBehaviour
                 return;
             }
             panelController.SetSelectedPlayer(PlayerID, playerNameText.text, team);
+            //ecgWave.SetActive(true);
+            panelController.ShowECGWave(true);
         }
 
         /// <summary>

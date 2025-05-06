@@ -108,4 +108,10 @@ public class HeartRateBarController : MonoBehaviour
             yield return null;
         }
     }
+    
+    public float GetBPM()
+    {
+        return currentBPM;
+    }
+
 }

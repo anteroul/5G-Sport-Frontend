@@ -4,6 +4,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(LineRenderer))]
 public class ECGGraph : MonoBehaviour
 {
+    public HeartRateBarController heartRateBarController;
     public LineRenderer lineRenderer;
     public int maxPoints = 512;
     public float xSpacing = 0.02f;
@@ -11,11 +12,12 @@ public class ECGGraph : MonoBehaviour
 
     void Start()
     {
+        heartRateBarController = gameObject.AddComponent<HeartRateBarController>();
         // Make sure the LineRenderer is set up for 2D/UI
         lineRenderer.useWorldSpace = false;
         lineRenderer.positionCount = 0;
 
-        // ——— HERE: force it into the UI overlay queue ———
+        // ï¿½ï¿½ï¿½ HERE: force it into the UI overlay queue ï¿½ï¿½ï¿½
         // this makes it render on top of all Canvas-based UI
         lineRenderer.material.renderQueue =
             (int)UnityEngine.Rendering.RenderQueue.Overlay;
@@ -23,7 +25,7 @@ public class ECGGraph : MonoBehaviour
 
     void Update()
     {
-        float ecgValue = ECGWaveform(Time.time);
+        float ecgValue = ECGWaveform(Time.time * heartRateBarController.GetBPM());
 
         if (points.Count >= maxPoints)
             points.RemoveAt(0);
@@ -40,6 +42,7 @@ public class ECGGraph : MonoBehaviour
 
     float ECGWaveform(float t)
     {
+        Debug.Log("Interval:" + (int)t + " | " + "BPM: " + heartRateBarController.GetBPM());
         float value = 0f;
         float modTime = t % 1.0f;
 

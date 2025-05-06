@@ -78,6 +78,9 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # We don't need to include this.
-/[Aa]ssets/TutorialInfo/*
+/[Aa]ssets/TutorialInfo/
+
+# Ignore .vscode folder
+/.vscode/
 
 # End of https://www.toptal.com/developers/gitignore/api/unity

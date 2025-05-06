@@ -11,7 +11,7 @@ TagManager:
   - Players
   - Water
   - UI
-  - 
+  - UITOP
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 1727765369
+    locked: 0
+  - name: UI-Top
+    uniqueID: 2545440837
     locked: 0
   m_RenderingLayers:
   - Default

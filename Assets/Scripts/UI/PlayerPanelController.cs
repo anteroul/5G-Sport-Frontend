@@ -89,7 +89,9 @@ public class PlayerPanelController : MonoBehaviour
         public Button selectButton;
 
         PlayerPanelController panelController;
-        FakeDataController fakeCtrl;
+        FakeDataController fakeCtrl; //Switch these two
+        DataManager dataCtrl;
+
         public int PlayerID { get; private set; }
 
         /// <summary>
@@ -104,10 +106,17 @@ public class PlayerPanelController : MonoBehaviour
                 id = -1;
             PlayerID = id;
 
+            
             // Cache reference to the FakeDataController on this card
             fakeCtrl = cardObject.GetComponent<FakeDataController>();
             if (fakeCtrl == null)
                 Debug.LogWarning($"No FakeDataController on cardObject for ID {PlayerID}");
+            
+
+            // Cache reference to the DataController on this card
+            dataCtrl = cardObject.GetComponent<DataManager>();
+            if (dataCtrl == null)
+                Debug.LogWarning($"No DataController on cardObject for ID {PlayerID}");
 
             // Wire up the Select button
             selectButton.onClick.AddListener(OnSelectPressed);
@@ -132,6 +141,9 @@ public class PlayerPanelController : MonoBehaviour
         {
             if (fakeCtrl != null)
                 fakeCtrl.isEmitting = emit;
+
+            if (dataCtrl != null)
+                dataCtrl.isEmitting = emit;
         }
     }
 }

@@ -344,6 +344,25 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5156058204715682554, guid: 6193be9cdc793c94b944cd2eb30010d0, type: 3}
   m_PrefabInstance: {fileID: 6520458499592582636}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &54476480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54476475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4b138d337eabe549b62c6aece352412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statsPanel: {fileID: 410856960}
+  isEmitting: 0
+  useFakeData: 1
+  fakeTickInterval: 2
+  fakePlayerId: 13
+  fakePlayerName: Test Player
+  fakeTeamName: Team A
 --- !u!1 &63885849
 GameObject:
   m_ObjectHideFlags: 0
@@ -12424,6 +12443,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6831778975554319092, guid: 6193be9cdc793c94b944cd2eb30010d0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6831778975554319092, guid: 6193be9cdc793c94b944cd2eb30010d0, type: 3}
       propertyPath: playerName
       value: Teemu Selanne
       objectReference: {fileID: 0}
@@ -12442,7 +12465,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4510378962405902169, guid: 6193be9cdc793c94b944cd2eb30010d0, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 54476480}
   m_SourcePrefab: {fileID: 100100000, guid: 6193be9cdc793c94b944cd2eb30010d0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -13,6 +13,7 @@ public class StatsPanelController : MonoBehaviour
     [Header("Health Statistics")]
 
     [Header("ECG Section")]
+    public ECGGraph ECG_Controller;
 
     [Header("Heart Rate Section")]
     public HeartRateBarController heartRateController;
@@ -34,8 +35,6 @@ public class StatsPanelController : MonoBehaviour
     public TMP_Text distanceUIText;
 
     //[Header("HeatMap Section")]
-
-
 
     public void UpdatePlayerInfo(int playerID, string playerName, string team)
     {
@@ -99,5 +98,11 @@ public class StatsPanelController : MonoBehaviour
         {
             enduranceBarController.SetEnduranceLevel(level);
         }
+    }
+
+    public void UpdateECG(int[] values)
+    {
+        if (!ECG_Controller) return;
+        ECG_Controller.SetECGValues(values);
     }
 }

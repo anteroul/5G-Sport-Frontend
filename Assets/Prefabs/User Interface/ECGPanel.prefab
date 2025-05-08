@@ -382,12 +382,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6900119984128368249}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f925a280f981777e8236ad0a65ade9e, type: 3}
+  m_Script: {fileID: 11500000, guid: 64a427df72d4d484198e627a2f69535f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 7574077395468397126}
   maxPoints: 512
-  xSpacing: 0.8
+  xSpacing: 0.02
 --- !u!1 &7128884232295697589
 GameObject:
   m_ObjectHideFlags: 0

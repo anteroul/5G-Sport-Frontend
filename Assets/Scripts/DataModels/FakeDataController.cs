@@ -1,8 +1,7 @@
-using UnityEngine;
-using System.Collections;
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using TMPro; // Required for TextMeshPro
+using UnityEngine;
 
 // Serializable classes matching the expected JSON schema
 [Serializable]
@@ -84,7 +83,7 @@ public class FakeDataController : MonoBehaviour
     public bool isEmitting = false;   // Controlled externally
 
     [Header("Simulation Settings")]
-    public int playerId = 12;
+    public int playerId = 1;
     public int sensorSetId = 1;
     public float tickInterval = 3f;
 
@@ -100,7 +99,7 @@ public class FakeDataController : MonoBehaviour
     public TMP_Text playerNameTxt;
     public TMP_Text playerIdTxt;
     public string playerName = "xxx xxx";
-    public string playerTeam; 
+    public string playerTeam;
 
     void Start()
     {
@@ -164,16 +163,43 @@ public class FakeDataController : MonoBehaviour
     {
         var pkt = JsonUtility.FromJson<SensorPacket>(json);
         var s = pkt.sensors[0];
-        statsPanel.UpdatePlayerInfo(pkt.playerId, playerName , playerTeam);
+        statsPanel.UpdatePlayerInfo(pkt.playerId, playerName, playerTeam);
         statsPanel.UpdateHeartRate(s.HR.average);
         statsPanel.UpdateEnergy(Mathf.RoundToInt(totalEnergy));
         statsPanel.UpdateEndurance(Mathf.Clamp(Mathf.FloorToInt((s.HR.average - 50f) / 150f * 7f), 0, 7));
         statsPanel.UpdateSpeed(currentSpeed);
         statsPanel.UpdateDistance(totalDistance);
+        statsPanel.UpdateECG(s.ECG.Samples);
     }
 
     // Helpers
-    int[] GenerateECGSamples() { var arr = new int[16]; for (int i = 0; i < 16; i++) arr[i] = UnityEngine.Random.Range(-50000, 50000); return arr; }
+    int[] GenerateECGSamples()
+    {
+        int[] samples = new int[16];
+
+        // Simulate one heartbeat cycle: P-wave, QRS complex, and T-wave
+        for (int i = 0; i < samples.Length; i++)
+        {
+            float t = i / (float)samples.Length;
+
+            // P-wave (small bump around 0.1-0.2)
+            float p = Mathf.Exp(-Mathf.Pow((t - 0.15f) * 20f, 2)) * 3000f;
+
+            // QRS complex (sharp peak around 0.4)
+            float q = -Mathf.Exp(-Mathf.Pow((t - 0.38f) * 100f, 2)) * 15000f;
+            float r = Mathf.Exp(-Mathf.Pow((t - 0.4f) * 100f, 2)) * 30000f;
+            float s = -Mathf.Exp(-Mathf.Pow((t - 0.42f) * 100f, 2)) * 10000f;
+
+            // T-wave (medium bump around 0.6)
+            float tWave = Mathf.Exp(-Mathf.Pow((t - 0.65f) * 20f, 2)) * 6000f;
+
+            // Combine components
+            samples[i] = Mathf.RoundToInt(p + q + r + s + tWave);
+        }
+
+        return samples;
+    }
+    
     AccelSample[] GenerateAccSamples() { var a = new AccelSample[4]; for (int i = 0; i < 4; i++) a[i] = new AccelSample { x = UnityEngine.Random.Range(-2f, 2f), y = UnityEngine.Random.Range(-2f, 2f), z = UnityEngine.Random.Range(-2f, 2f) }; return a; }
     GyroSample[] GenerateGyroSamples() { var g = new GyroSample[4]; for (int i = 0; i < 4; i++) g[i] = new GyroSample { x = UnityEngine.Random.Range(-10f, 10f), y = UnityEngine.Random.Range(-10f, 10f), z = UnityEngine.Random.Range(-10f, 10f) }; return g; }
     MagnSample[] GenerateMagnSamples() { var m = new MagnSample[4]; for (int i = 0; i < 4; i++) m[i] = new MagnSample { x = UnityEngine.Random.Range(-50f, 50f), y = UnityEngine.Random.Range(-50f, 50f), z = UnityEngine.Random.Range(-50f, 50f) }; return m; }

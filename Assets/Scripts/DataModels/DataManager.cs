@@ -1,7 +1,6 @@
-using UnityEngine;
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// DataManager handles both fake and real JSON packets,
@@ -15,12 +14,33 @@ public class DataManager : MonoBehaviour
     [Tooltip("Enable to start emitting data (fake or real)")]
     public bool isEmitting = false;
 
+    [Tooltip("InfluxDB Settings")]
+    public InfluxDBClient client;
+    const string query = @"
+            import 'experimental'
+            
+            heartRate = from(bucket: 'Full_Player_Data')
+            |> range(start: -5s)
+            |> filter(fn: (r) => r._measurement == 'measurement_heart_rate')
+            ecg = from(bucket: 'Full_Player_Data')
+            |> range(start: -5s)
+            |> filter(fn: (r) => r._measurement == 'measurement_ecg')
+            imu = from(bucket: 'Full_Player_Data')
+            |> range(start: -5s)
+            |> filter(fn: (r) => r._measurement == 'measurement_imu')
+            gnss = from(bucket: 'Full_Player_Data')
+            |> range(start: -5s)
+            |> filter(fn: (r) => r._measurement == 'measurement_gnss')
+            union(tables: [heartRate, ecg, imu, gnss])
+    ";
+
+
     [Tooltip("Use generated fake data instead of real incoming data")]
     public bool useFakeData = true;
 
     [Header("Fake Data Settings")]
     public float fakeTickInterval = 3f;
-    public int fakePlayerId = 12;
+    public int fakePlayerId = 1;
     public string fakePlayerName = "Test Player";
     public string fakeTeamName = "Team A";
 
@@ -31,6 +51,11 @@ public class DataManager : MonoBehaviour
     private double lastLon;
     private long lastTimestamp = 0;
 
+    void Awake()
+    {
+        client = new InfluxDBClient();
+    }
+
     void Start()
     {
         // Initialize last known position
@@ -38,7 +63,8 @@ public class DataManager : MonoBehaviour
         lastLon = 24.945632;
 
         // Start fake loop if configured
-        StartCoroutine(FakeDataLoop());
+        if (useFakeData) StartCoroutine(FakeDataLoop());
+        else StartCoroutine(FetchData());
     }
 
     /// <summary>
@@ -50,6 +76,25 @@ public class DataManager : MonoBehaviour
         if (!isEmitting || useFakeData) return;
         var packet = JsonUtility.FromJson<SensorPacket>(json);
         HandlePacket(packet);
+    }
+
+    /// <summary>
+    /// Coroutine for fetching data from Influx.
+    /// Waits until isEmitting is true before each tick.
+    /// </summary>
+    private IEnumerator FetchData()
+    {
+        while (true)
+        {
+            // Wait for emission flag
+            yield return new WaitUntil(() => isEmitting);
+            // Wait interval
+            yield return new WaitForSeconds(fakeTickInterval);
+            // Process generated packet
+            string json = JsonUtility.ToJson(StartCoroutine(client.QueryInflux(query)));
+            var data = JsonUtility.FromJson<SensorPacket>(json.ToString());
+            HandlePacket(data);
+        }
     }
 
     /// <summary>
@@ -96,7 +141,7 @@ public class DataManager : MonoBehaviour
                         average        = currentHR
                     },
                     ECG = new ECGData {
-                        Samples        = GenerateECGSamples(rnd),
+                        Samples        = GenerateECGSamples(),
                         Movesense_series = "174630000192",
                         Pico_ID        = "self.picoW_id",
                         Timestamp_UTC  = now,
@@ -135,6 +180,7 @@ public class DataManager : MonoBehaviour
         double lat = s.GNSS.Latitude;
         double lon = s.GNSS.Longitude;
         long now = s.HR.Timestamp_UTC;
+        int[] ecg = s.ECG.Samples;
 
         // Calculate time delta
         float delta = lastTimestamp > 0 ? (now - lastTimestamp) : fakeTickInterval;
@@ -153,6 +199,7 @@ public class DataManager : MonoBehaviour
             useFakeData ? fakePlayerName : packet.playerId.ToString(),
             useFakeData ? fakeTeamName : "");
         statsPanel.UpdateHeartRate(hr);
+        statsPanel.UpdateECG(ecg);
         statsPanel.UpdateEnergy(Mathf.RoundToInt(totalEnergy));
         statsPanel.UpdateEndurance(fatigue);
         statsPanel.UpdateSpeed(spd);
@@ -196,10 +243,33 @@ public class DataManager : MonoBehaviour
     }
 
     // Helpers
-    private int[] GenerateECGSamples(System.Random rnd)
+    private int[] GenerateECGSamples()
     {
-        var arr = new int[16]; for (int i = 0; i < 16; i++) arr[i] = rnd.Next(-50000, 50000); return arr;
+        int[] samples = new int[16];
+
+        // Simulate one heartbeat cycle: P-wave, QRS complex, and T-wave
+        for (int i = 0; i < samples.Length; i++)
+        {
+            float t = i / (float)samples.Length;
+
+            // P-wave (small bump around 0.1-0.2)
+            float p = Mathf.Exp(-Mathf.Pow((t - 0.15f) * 20f, 2)) * 3000f;
+
+            // QRS complex (sharp peak around 0.4)
+            float q = -Mathf.Exp(-Mathf.Pow((t - 0.38f) * 100f, 2)) * 15000f;
+            float r = Mathf.Exp(-Mathf.Pow((t - 0.4f) * 100f, 2)) * 30000f;
+            float s = -Mathf.Exp(-Mathf.Pow((t - 0.42f) * 100f, 2)) * 10000f;
+
+            // T-wave (medium bump around 0.6)
+            float tWave = Mathf.Exp(-Mathf.Pow((t - 0.65f) * 20f, 2)) * 6000f;
+
+            // Combine components
+            samples[i] = Mathf.RoundToInt(p + q + r + s + tWave);
+        }
+
+        return samples;
     }
+
     private AccelSample[] GenerateAccSamples(System.Random rnd)
     {
         var a = new AccelSample[4]; for (int i = 0; i < 4; i++) a[i] = new AccelSample { x = (float)(rnd.NextDouble() * 4 - 2), y = (float)(rnd.NextDouble() * 4 - 2), z = (float)(rnd.NextDouble() * 4 - 2) }; return a;

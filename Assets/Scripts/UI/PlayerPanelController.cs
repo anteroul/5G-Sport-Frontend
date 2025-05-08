@@ -10,8 +10,8 @@ public class PlayerPanelController : MonoBehaviour
     public GameObject team2Viewport;
 
     [Header("Player Cards (Manually Assigned)")]
-    public List<PlayerCardUI> team1Cards = new List<PlayerCardUI>();
-    public List<PlayerCardUI> team2Cards = new List<PlayerCardUI>();
+    public List<PlayerCardUI> team1Cards = new();
+    public List<PlayerCardUI> team2Cards = new();
 
     [Header("UI Buttons")]
     public Button team1Button;
@@ -36,6 +36,7 @@ public class PlayerPanelController : MonoBehaviour
     public void ShowECGWave(bool show)
     {
         ecgWave.SetActive(show);  // Valid: this.ecgWave exists here :contentReference[oaicite:2]{index=2}
+        statsPanel.ECG_Controller.ClearGraph();
     }
 
     void ShowTeam1()
@@ -135,7 +136,7 @@ public class PlayerPanelController : MonoBehaviour
         }
 
         /// <summary>
-        /// Toggles the cached FakeDataController’s isEmitting flag.
+        /// Toggles the cached FakeDataControllerï¿½s isEmitting flag.
         /// </summary>
         public void SetEmitting(bool emit)
         {

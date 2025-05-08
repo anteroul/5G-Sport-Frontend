@@ -4,10 +4,11 @@ using System.Collections.Generic;
 [RequireComponent(typeof(LineRenderer))]
 public class ECGGraph : MonoBehaviour
 {
+    public bool isFaking = false;
     public LineRenderer lineRenderer;
     public int maxPoints = 512;
     public float xSpacing = 0.02f;
-    private List<Vector3> points = new List<Vector3>();
+    private List<Vector3> points = new();
 
     void Start()
     {
@@ -15,7 +16,7 @@ public class ECGGraph : MonoBehaviour
         lineRenderer.useWorldSpace = false;
         lineRenderer.positionCount = 0;
 
-        // ——— HERE: force it into the UI overlay queue ———
+        // ï¿½ï¿½ï¿½ HERE: force it into the UI overlay queue ï¿½ï¿½ï¿½
         // this makes it render on top of all Canvas-based UI
         lineRenderer.material.renderQueue =
             (int)UnityEngine.Rendering.RenderQueue.Overlay;
@@ -23,16 +24,18 @@ public class ECGGraph : MonoBehaviour
 
     void Update()
     {
-        float ecgValue = ECGWaveform(Time.time);
-
         if (points.Count >= maxPoints)
             points.RemoveAt(0);
 
-        points.Add(new Vector3(points.Count * xSpacing, ecgValue, 0));
+        if (isFaking)
+        {
+            float ecgValue = ECGWaveform(Time.time);
+            points.Add(new Vector3(points.Count * xSpacing, ecgValue, 0));
 
-        // Shift x to scroll the graph left
-        for (int i = 0; i < points.Count; i++)
-            points[i] = new Vector3(i * xSpacing, points[i].y, 0);
+            // Shift x to scroll the graph left
+            for (int i = 0; i < points.Count; i++)
+                points[i] = new Vector3(i * xSpacing, points[i].y, 0);
+        }
 
         lineRenderer.positionCount = points.Count;
         lineRenderer.SetPositions(points.ToArray());
@@ -50,5 +53,21 @@ public class ECGGraph : MonoBehaviour
         else value = Mathf.PerlinNoise(t * 5, 0f) * 2.0f;
 
         return value;
+    }
+
+    public void SetECGValues(int[] values)
+    {
+        for (int i = 0; i < values.Length; ++i)
+        {
+            points.Add(new Vector3(points.Count * xSpacing, values[i] / 1000f, 0));
+            // Shift x to scroll the graph left
+            for (int j = i; j < points.Count; j++)
+                points[j] = new Vector3(j * xSpacing, points[j].y, 0);
+        }
+    }
+
+    public void ClearGraph()
+    {
+        points.Clear();
     }
 }

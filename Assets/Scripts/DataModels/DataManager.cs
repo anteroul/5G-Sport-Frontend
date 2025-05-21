@@ -91,7 +91,7 @@ public class DataManager : MonoBehaviour
             // Wait interval
             yield return new WaitForSeconds(fakeTickInterval);
             // Process generated packet
-            string json = JsonUtility.ToJson(StartCoroutine(client.QueryInflux(query)));
+            string json = JsonUtility.ToJson(client.QueryInflux(query));
             var data = JsonUtility.FromJson<SensorPacket>(json.ToString());
             HandlePacket(data);
         }

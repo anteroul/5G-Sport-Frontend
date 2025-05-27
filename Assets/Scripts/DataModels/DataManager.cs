@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.IO;
 using UnityEngine;
 
 /// <summary>
@@ -15,7 +16,6 @@ public class DataManager : MonoBehaviour
     public bool isEmitting = false;
 
     [Tooltip("InfluxDB Settings")]
-    public InfluxDBClient client;
     const string query = @"
             import 'experimental'
             
@@ -34,12 +34,11 @@ public class DataManager : MonoBehaviour
             union(tables: [heartRate, ecg, imu, gnss])
     ";
 
-
     [Tooltip("Use generated fake data instead of real incoming data")]
-    public bool useFakeData = true;
+    public bool useFakeData = false;
 
     [Header("Fake Data Settings")]
-    public float fakeTickInterval = 3f;
+    public float tickInterval = 3f;
     public int fakePlayerId = 1;
     public string fakePlayerName = "Test Player";
     public string fakeTeamName = "Team A";
@@ -51,11 +50,6 @@ public class DataManager : MonoBehaviour
     private double lastLon;
     private long lastTimestamp = 0;
 
-    void Awake()
-    {
-        client = new InfluxDBClient();
-    }
-
     void Start()
     {
         // Initialize last known position
@@ -64,37 +58,21 @@ public class DataManager : MonoBehaviour
 
         // Start fake loop if configured
         if (useFakeData) StartCoroutine(FakeDataLoop());
-        else StartCoroutine(FetchData());
+        else StartCoroutine(ProcessIncomingJson(InfluxDBClient.QueryInflux(query).ToString()));
     }
 
     /// <summary>
     /// Call this to process real JSON data from sensors or DB.
     /// Will run only when isEmitting and useFakeData is false.
     /// </summary>
-    public void ProcessIncomingJson(string json)
+    public IEnumerator ProcessIncomingJson(string json)
     {
-        if (!isEmitting || useFakeData) return;
-        var packet = JsonUtility.FromJson<SensorPacket>(json);
-        HandlePacket(packet);
-    }
+        if (!isEmitting || useFakeData) yield return null;
 
-    /// <summary>
-    /// Coroutine for fetching data from Influx.
-    /// Waits until isEmitting is true before each tick.
-    /// </summary>
-    private IEnumerator FetchData()
-    {
-        while (true)
-        {
-            // Wait for emission flag
-            yield return new WaitUntil(() => isEmitting);
-            // Wait interval
-            yield return new WaitForSeconds(fakeTickInterval);
-            // Process generated packet
-            string json = JsonUtility.ToJson(client.QueryInflux(query));
-            var data = JsonUtility.FromJson<SensorPacket>(json.ToString());
-            HandlePacket(data);
-        }
+        var data = JsonUtility.ToJson(json);
+        var packet = JsonUtility.FromJson<SensorPacket>(data);
+        HandlePacket(packet);
+        yield return ProcessIncomingJson(InfluxDBClient.QueryInflux(query).ToString());
     }
 
     /// <summary>
@@ -113,7 +91,7 @@ public class DataManager : MonoBehaviour
             yield return new WaitUntil(() => isEmitting && useFakeData);
 
             // Wait interval
-            yield return new WaitForSeconds(fakeTickInterval);
+            yield return new WaitForSeconds(tickInterval);
 
             // Generate timestamp
             long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
@@ -183,7 +161,7 @@ public class DataManager : MonoBehaviour
         int[] ecg = s.ECG.Samples;
 
         // Calculate time delta
-        float delta = lastTimestamp > 0 ? (now - lastTimestamp) : fakeTickInterval;
+        float delta = lastTimestamp > 0 ? (now - lastTimestamp) : tickInterval;
         lastTimestamp = now;
 
         // Metrics

@@ -354,7 +354,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5156058204715682554}
-  - component: {fileID: 6831778975554319092}
   - component: {fileID: 6009371679770028778}
   - component: {fileID: 1127395809637076304}
   m_Layer: 5
@@ -387,27 +386,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6831778975554319092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4510378962405902169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcf79eabf19b9764fbe88a924e9576a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statsPanel: {fileID: 0}
-  isEmitting: 0
-  playerId: 1
-  sensorSetId: 1
-  tickInterval: 2
-  playerNameTxt: {fileID: 5032262939929333332}
-  playerIdTxt: {fileID: 6408577935489429498}
-  playerName: 'Joonas '
-  playerTeam: 
 --- !u!222 &6009371679770028778
 CanvasRenderer:
   m_ObjectHideFlags: 0
